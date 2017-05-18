@@ -9,11 +9,11 @@ Code in the LTRANS GitHub organization is based off of code developed by Elizabe
 -------------------------------
 #### The following papers and User's Guide should be cited:  
 
-North, E. W., E. E. Adams, Z. Schlag, C. R. Sherwood, R. He, S. Socolofsky. 2011. Simulating oil droplet dispersal from the Deepwater Horizon spill with a Lagrangian approach. AGU Book Series: Monitoring and Modeling the Deepwater Horizon Oil Spill: A Record Breaking Enterprise
+North, E. W., E. E. Adams, Z. Schlag, C. R. Sherwood, R. He, S. Socolofsky. 2011. Simulating oil droplet dispersal from the Deepwater Horizon spill with a Lagrangian approach. AGU Book Series: Monitoring and Modeling the Deepwater Horizon Oil Spill: A Record Breaking Enterprise  [link to paper]( http://onlinelibrary.wiley.com/doi/10.1029/2011GM001102/summary)
 
-North, E. W., Z. Schlag, R. R. Hood, M. Li, L. Zhong, T. Gross, and V. S. Kennedy. 2008. Vertical swimming behavior influences the dispersal of simulated oyster larvae in a coupled particle-tracking and hydrodynamic model of Chesapeake Bay. Marine Ecology Progress Series 359: 99-115
+North, E. W., Z. Schlag, R. R. Hood, M. Li, L. Zhong, T. Gross, and V. S. Kennedy. 2008. Vertical swimming behavior influences the dispersal of simulated oyster larvae in a coupled particle-tracking and hydrodynamic model of Chesapeake Bay. Marine Ecology Progress Series 359: 99-115  [link to paper](https://doi.org/10.3354/meps07317)
 
-Schlag, Z. R., and E. W. North. 2012. Lagrangian TRANSport model (LTRANS v.2) User’s Guide. University of Maryland Center for Environmental Science, Horn Point Laboratory. Cambridge, MD. 183 pp.
+Schlag, Z. R., and E. W. North. 2012. Lagrangian TRANSport model (LTRANS v.2) User’s Guide. University of Maryland Center for Environmental Science, Horn Point Laboratory. Cambridge, MD. 183 pp.  [link to guide](https://github.com/LTRANS/LTRANSv.2b/blob/master/LTRANSv2_UsersGuide_6Jan12.pdf)
 
 -------------------------------
 #### External dependencies and programs:
