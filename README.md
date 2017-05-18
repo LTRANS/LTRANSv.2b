@@ -1,11 +1,12 @@
 # LTRANSv.2b
-Larval TRANSport Lagrangian model is an off-line particle-tracking model that is forced with Regional Ocean Modeling System (ROMS) results.
+**Larval TRANSport Lagrangian model is an off-line particle-tracking model that is forced with Regional Ocean Modeling System (ROMS) results.**
 
 The code was originally released here:
 http://northweb.hpl.umces.edu/LTRANS.htm
 
 Code in the LTRANS GitHub organization is based off of code developed by Elizabeth North, Zachary Schlag, and Ian Mitchell with input from Chris Sherwood and Scott Peckham.  
 
+-------------------------------
 The following papers and User's Guide should be cited:
 
 North, E. W., E. E. Adams, S. Schlag, C. R. Sherwood, R. He, S. Socolofsky. 2011. Simulating oil droplet dispersal from the Deepwater Horizon spill with a Lagrangian approach. AGU Book Series: Monitoring and Modeling the Deepwater Horizon Oil Spill: A Record Breaking Enterprise 
