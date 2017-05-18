@@ -7,7 +7,7 @@ http://northweb.hpl.umces.edu/LTRANS.htm
 Code in the LTRANS GitHub organization is based off of code developed by Elizabeth North, Zachary Schlag, and Ian Mitchell with input from Chris Sherwood and Scott Peckham.  
 
 -------------------------------
-#### The following papers and User's Guide should be cited:  
+### The following papers and User's Guide should be cited:  
 
 North, E. W., E. E. Adams, Z. Schlag, C. R. Sherwood, R. He, S. Socolofsky. 2011. Simulating oil droplet dispersal from the Deepwater Horizon spill with a Lagrangian approach. AGU Book Series: Monitoring and Modeling the Deepwater Horizon Oil Spill: A Record Breaking Enterprise  [link to paper]( http://onlinelibrary.wiley.com/doi/10.1029/2011GM001102/summary)
 
@@ -16,7 +16,7 @@ North, E. W., Z. Schlag, R. R. Hood, M. Li, L. Zhong, T. Gross, and V. S. Kenned
 Schlag, Z. R., and E. W. North. 2012. Lagrangian TRANSport model (LTRANS v.2) User’s Guide. University of Maryland Center for Environmental Science, Horn Point Laboratory. Cambridge, MD. 183 pp.  [link to guide](https://github.com/LTRANS/LTRANSv.2b/blob/master/LTRANSv2_UsersGuide_6Jan12.pdf)
 
 -------------------------------
-#### External dependencies and programs:
+### External dependencies and programs:
 
 LTRANS v.2b requires NetCDF libraries and uses the following programs to calculate random numbers (Mersenne Twister) and fit tension splines (TSPACK). Because LTRANS v.2 reads-in ROMS-generated NetCDF (.nc) files, it requires that the appropriate NetCDF libraries be installed on your computer (see files and links below). Also, please note that although the Mersenne Twister and TSPACK programs are included in the LTRANS v.2b in the Random_module.f90 and Tension_module.f90, respectively, they do not share the same license file as LTRANS v.2b. Please review and respect their permissions (links and instructions provided below).
 
@@ -33,7 +33,7 @@ This program was recoded into F90 and included in the Random_module.f90 in LTRAN
 This program (ACM TOMS Algorithm 716) was created by Robert J. Renka and is used in LTRANS as part of the water column profile interpolation technique. The original TSPACK code can be found at the link to the left and is copyrighted by the Association for Computing Machinery (ACM). With the permission of Dr. Renka and ACM, TSPACK was modified for use in LTRANS by removing unused code and call variables and updating it to Fortran 90. The modified version of TSPACK is included in the LTRANS source code in the Tension Spline Module (tension_module.f90). If you would like to use LTRANS with the modified TSPACK software, please read and respect the ACM Software Copyright and License Agreement. For noncommercial use, ACM grants "a royalty-free, nonexclusive right to execute, copy, modify and distribute both the binary and source code solely for academic, research and other similar noncommercial uses" subject to the conditions noted in the license agreement. Note that if you plan commercial use of LTRANS with the modified TSPACK software, you must contact ACM at permissions@acm.org to arrange an appropriate license. It may require payment of a license fee for commerical use.
 
 -------------------------------
-#### Example input files
+### Example input files
 
 These files can be used to test LTRANS v.2b. They include examples of particle location and habitat polygon input files (.csv) and ROMS grid and history files (.nc) that are needed to run LTRANS v.2b. Many thanks to Wen Long for sharing the ROMS .nc files. The LTRANS v.2b code above is configured to run with these input files. Note: please download the tar (LTRANSv2.tgz) history files (clippped_macroms_his_*.nc) files between the hours of 5 pm and 6 am Eastern Standard Time because of their large size.  These files are too large to be included in the GitHub repository.  
 
