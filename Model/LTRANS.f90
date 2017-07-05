@@ -1514,6 +1514,8 @@ contains
       !
       !  Note that Pwc_wzb(1) = P_depth = Depth at particle location
 
+      if (abs(z0) .eq. 0.0) stop 'dividing by 0'
+
       P_Ub=Pwc_Ub*log10((Zpar-Pwc_wzb(1))/z0)/log10((Pwc_zb(1) -Pwc_wzb(1))/z0)
       P_Uc=Pwc_Uc*log10((Zpar-Pwc_wzb(1))/z0)/log10((Pwc_zc(1) -Pwc_wzb(1))/z0)
       P_Uf=Pwc_Uf*log10((Zpar-Pwc_wzb(1))/z0)/log10((Pwc_zf(1) -Pwc_wzb(1))/z0)
