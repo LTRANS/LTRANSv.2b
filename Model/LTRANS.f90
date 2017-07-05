@@ -180,7 +180,8 @@ contains
                       createNetCDF,writeNetCDF
     use param_mod,    only: numpar,days,dt,idt,seed,parfile,settlementon,   &
                       Behavior,TrackCollisions,SaltTempOn,writeNC,          &
-                      WriteHeaders,WriteModelTiming,ErrorFlag,getParams,MaxNumParticles
+                      WriteHeaders,MaxNumParticles,WriteModelTiming,       &
+                      parAttrib,ErrorFlag,getParams
 
     integer :: n,ele_err
     double precision, allocatable, dimension(:) :: pLon,pLat
