@@ -948,10 +948,12 @@ contains
 
       enddo
 
+      if (ws .gt. us) then
       !W-coordinate depths at particle location (cont.)
-      Pwc_wzb(i)= getWlevel(P_zetab,P_depth,ws)
-      Pwc_wzc(i)= getWlevel(P_zetac,P_depth,ws)
-      Pwc_wzf(i)= getWlevel(P_zetaf,P_depth,ws)
+      Pwc_wzb(ws)= getWlevel(P_zetab,P_depth,ws)
+      Pwc_wzc(ws)= getWlevel(P_zetac,P_depth,ws)
+      Pwc_wzf(ws)= getWlevel(P_zetaf,P_depth,ws)
+      end if
 
       do i=1,us
         if ((Zpar .LT. Pwc_zb(i)) .OR. &
