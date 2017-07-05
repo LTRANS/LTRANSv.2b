@@ -886,7 +886,7 @@ contains
 
       ! *********************************************************
       ! *                                                       *
-      ! *       Ensure Particle is Within Verticle Bounds       *
+      ! *       Ensure Particle is Within Vertical Bounds       *
       ! *                                                       *
       ! *********************************************************
 
