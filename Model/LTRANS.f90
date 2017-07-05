@@ -1066,7 +1066,7 @@ contains
 
       IF (SaltTempOn) THEN
 
-        !Calculate salinity and temperture at the particle location
+        !Calculate salinity and temperature at the particle location
         do i=3,us-2
           if ((Zpar .LT. Pwc_zb(i)) .OR.    &
               (Zpar .LT. Pwc_zc(i)) .OR.    &
