@@ -1,3 +1,10 @@
 input/*
 results/*
 *.exe
+.DS_Store
+output/*
+llbounds.bln
+OpenOceanBoundaryMidpoints.csv
+para_Headers.txt
+Timing.csv
+xybounds.bln
