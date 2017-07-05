@@ -1270,7 +1270,7 @@ contains
             call setOut(n)
           endif
           OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
-            write(210,25) n,ix(3)
+            write(210,25) n,int(ix(3))
           CLOSE(210)
           cycle
         endif
