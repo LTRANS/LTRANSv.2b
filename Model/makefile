@@ -17,12 +17,12 @@
 #------------------------------------------------
 #
 #    Turn one of the following on:
-IFORT_UMCES := on
-GFORTRAN_UMCES :=
+IFORT_UMCES :=
+GFORTRAN_UMCES := on
 GFORTRAN_USGS :=
 PGI_USGS   :=
 
-ifdef IFORT_UMCES 
+ifdef IFORT_UMCES
   FC = ifort
   NETCDF_INCDIR = /usr/local/include
   NETCDF_LIBDIR = /usr/local/lib
@@ -31,8 +31,8 @@ endif
 
 ifdef GFORTRAN_UMCES
   FC = gfortran
-  NETCDF_INCDIR = /data/users/imitchell/local/include
-  NETCDF_LIBDIR = /data/users/imitchell/local/lib
+  NETCDF_INCDIR = /usr/local/include
+  NETCDF_LIBDIR = /usr/local/lib
   FFLAGS = -march=k8 -ffast-math -fno-cx-limited-range -O3 -funroll-loops --param max-unroll-times=4 -ffree-line-length-none -I$(NETCDF_INCDIR)
 endif
 
@@ -95,4 +95,3 @@ LTRANS : $(OBJS)
 
 clean:
 	\rm *.o *.mod LTRANS.exe
-
