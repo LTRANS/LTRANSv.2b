@@ -235,7 +235,7 @@
   INTEGER :: NCtime                 ! Time interval between creation of new NetCDF output files
 
   !NetCDF Model Metadata:
-  CHARACTER(LEN=200) :: SVN_Version ! SVN Repository and Version #
+  CHARACTER(LEN=200) :: Github      ! Github Repository and Version #
   CHARACTER(LEN=100) :: RunName     ! Unique Identifier for this particular model run
   CHARACTER(LEN=200) :: ExeDir      ! Location of the model run executable
   CHARACTER(LEN=200) :: OutDir      ! Location of the model run output files
@@ -244,7 +244,7 @@
   CHARACTER(LEN=200) :: StartedOn   ! Date the model run began
 
   namelist/output/outpath,NCOutFile,outpathGiven,writeCSV,writeNC,NCtime, &
-                  SVN_Version,RunName,ExeDir,OutDir,RunBy,Institution,StartedOn
+                  Github,RunName,ExeDir,OutDir,RunBy,Institution,StartedOn
 
 
 
