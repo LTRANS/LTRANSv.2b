@@ -2952,7 +2952,7 @@ CONTAINS
 
   SUBROUTINE createNetCDF(dob)
     USE PARAM_MOD, ONLY: numpar,NCOutFile,outpath,outpathGiven,NCtime,         &
-        SVN_Version,RunName,ExeDir,OutDir,RunBy,Institution,StartedOn,         &
+        Github,RunName,ExeDir,OutDir,RunBy,Institution,StartedOn,         &
         TrackCollisions,SaltTempOn
     USE netcdf
     IMPLICIT NONE

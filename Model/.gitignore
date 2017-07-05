@@ -8,3 +8,5 @@ OpenOceanBoundaryMidpoints.csv
 para_Headers.txt
 Timing.csv
 xybounds.bln
+*.o
+*.mod
