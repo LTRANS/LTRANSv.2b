@@ -196,6 +196,9 @@ contains
 
     CALL getParams()
 
+    ! hf check actual against maximum allowed number of particles
+    if (numpar > MaxNumParticles) stop 'increase MaxNumParticles and recompile'
+
     CALL writeModelInfo()
 
     write(*,*) ' '
