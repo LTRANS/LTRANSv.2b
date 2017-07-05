@@ -3235,7 +3235,7 @@ CONTAINS
         STATUS = NF90_PUT_ATT(NCID, NF90_GLOBAL, "author", "Zachary Schlag")
         IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
-        STATUS = NF90_PUT_ATT(NCID, NF90_GLOBAL, "svn", SVN_Version)
+        STATUS = NF90_PUT_ATT(NCID, NF90_GLOBAL, "github", Github)
         IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
         STATUS = NF90_PUT_ATT(NCID, NF90_GLOBAL, "run_name", RunName)
