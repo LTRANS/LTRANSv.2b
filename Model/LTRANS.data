@@ -222,7 +222,7 @@ $output
                              ! Note: setting this to 0 will result in just one large output file
 
   !NetCDF Model Metadata (these will be stale unless you edit them):
-  SVN_Version  = 'https://cmgsoft.repositoryhosting.com/svn/cmgsoft_ltrans/trunk'
+  Github  = 'https://github.com/LTRANS/LTRANSv.2b'
   RunName      = 'LTRANS v.2 test case'
   ExeDir       = '.'
   OutDir       = './output'

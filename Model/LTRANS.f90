@@ -1,18 +1,18 @@
-! LTRANS - Larval TRANSport Lagrangian model v.2b
+! LTRANS - Larval TRANSport Lagrangian model v.2b                                
 ! Date: 23 May 2013
 !
-! Description: The Lagrangian TRANSport model (LTRANS) is an
+! Description: The Lagrangian TRANSport model (LTRANS) is an 
 ! off-line particle-tracking model that runs with the stored predictions of
-! a 3D hydrodynamic model, specifically the Regional Ocean Modeling System
-! (ROMS). Although LTRANS was built to simulate oyster larvae, it can
-! be adapted to simulate passive particles and other planktonic organisms.
-! LTRANS is written in Fortran 90 and is designed to track the trajectories
-! of particles in three dimensions. It includes a 4th order Runge-Kutta scheme
+! a 3D hydrodynamic model, specifically the Regional Ocean Modeling System 
+! (ROMS). Although LTRANS was built to simulate oyster larvae, it can  
+! be adapted to simulate passive particles and other planktonic organisms. 
+! LTRANS is written in Fortran 90 and is designed to track the trajectories 
+! of particles in three dimensions. It includes a 4th order Runge-Kutta scheme 
 ! for particle advection and a random displacement model for vertical turbulent
-! particle motion. Reflective boundary conditions, larval behavior, and
-! settlement routines are also included. Components of LTRANS have been in
+! particle motion. Reflective boundary conditions, larval behavior, and 
+! settlement routines are also included. Components of LTRANS have been in 
 ! development since 2002 and are described in the following publications:
-! North et al. 2004, North et al. 2006a, North et al. 2006b,
+! North et al. 2004, North et al. 2006a, North et al. 2006b, 
 ! North et al. 2008, North et al. 2011, Schlag and North 2012.
 !
 ! Developers:
@@ -20,17 +20,17 @@
 !   Zachary Schlag: zschlag@umces.edu
 !   Ian Mitchell: imitchell@umces.edu
 !
-! Mailing Address:
+! Mailing Address:  
 !   University of Maryland
 !   Center for Envir. Science
 !   Horn Point Laboratory
 !   Cambridge, MD 21613 USA
 !
-! Funding was provided by the National Science Foundation Biological
-! and Physical Oceanography Programs, Maryland Department of Natural
-! Resources, NOAA Chesapeake Bay Office, NOAA Maryland Sea Grant College
-! Program, & NOAA-funded UMCP Advanced Study Institute for the Environment.
-!
+! Funding was provided by the National Science Foundation Biological 
+! and Physical Oceanography Programs, Maryland Department of Natural 
+! Resources, NOAA Chesapeake Bay Office, NOAA Maryland Sea Grant College 
+! Program, & NOAA-funded UMCP Advanced Study Institute for the Environment. 
+! 
 ! **********************************************************************
 ! **********************************************************************
 ! **                      Copyright (c) 2013                          **
@@ -78,16 +78,16 @@
 ! **  http://northweb.hpl.umces.edu/LTRANS.htm#Description            **
 ! **                                                                  **
 ! **********************************************************************
-! **********************************************************************
+! ********************************************************************** 
 
 PROGRAM main
 
-! LTRANS.f90 contains the main structure of the particle-tracking program.
-! It executes the external time step, internal time step, and particle loops,
-! advects particles, and writes output. It calls modules that read in
-! hydrodynamic model information, move particles due to turbulence and
-! behavior, test if particles are in habitat polygons, and apply boundary
-! conditions to keep particles in the model domain.
+! LTRANS.f90 contains the main structure of the particle-tracking program. 
+! It executes the external time step, internal time step, and particle loops, 
+! advects particles, and writes output. It calls modules that read in 
+! hydrodynamic model information, move particles due to turbulence and 
+! behavior, test if particles are in habitat polygons, and apply boundary 
+! conditions to keep particles in the model domain. 
 !
 ! Program created by:   Elizabeth North
 ! Modified by:          Zachary Schlag
@@ -180,8 +180,7 @@ contains
                       createNetCDF,writeNetCDF
     use param_mod,    only: numpar,days,dt,idt,seed,parfile,settlementon,   &
                       Behavior,TrackCollisions,SaltTempOn,writeNC,          &
-                      WriteHeaders,MaxNumParticles,WriteModelTiming,       &
-                      parAttrib,ErrorFlag,getParams
+                      WriteHeaders,WriteModelTiming,ErrorFlag,getParams
 
     integer :: n,ele_err
     double precision, allocatable, dimension(:) :: pLon,pLat
@@ -190,15 +189,12 @@ contains
     integer :: in_island,inbounds
     double precision:: island
 
-
+  
   ! ***************************************************************************
   ! *                          Get Parameter Values                           *
   ! ***************************************************************************
 
     CALL getParams()
-
-    ! hf check actual against maximum allowed number of particles
-    if (numpar > MaxNumParticles) stop 'increase MaxNumParticles and recompile'
 
     CALL writeModelInfo()
 
@@ -244,13 +240,13 @@ contains
     printdt=0                  !print counter
     CALL init_genrand(seed)    !set random number generator Seed Value
 
-
+  
     ! *************************************************************************
     ! *                   Initialize Particle Attributes                      *
     ! *************************************************************************
 
-    ! Read-in lat/long of particles. If settlement module is on, read in
-    ! the habitat polygon on which the particle start
+    ! Read-in lat/long of particles. If settlement module is on, read in    
+    ! the habitat polygon on which the particle start                       
     write(*,*) 'read in particle locations', numpar
 
     OPEN(1,FILE=TRIM(parfile))
@@ -281,7 +277,7 @@ contains
     write(*,*) '  Particle n=5 X=',par(5,pX),'Y=',par(5,pY)
     if(settlementon) write(*,*) '  Particle n=5 Start Polygon=',startpoly(5)
 
-
+  
     ! *******************************************************************
     ! *                    Initialize NetCDF Output                     *
     ! *******************************************************************
@@ -312,7 +308,7 @@ contains
       endif
     endif
 
-
+  
     ! *************************************************************************
     ! *                                                                       *
     ! *           Initial Read-In of Hydrodynamic Model Information           *
@@ -322,7 +318,7 @@ contains
     !Initialize Grid / Create Elements
     CALL initGrid()
 
-
+  
     ! *************************************************************************
     ! *                                                                       *
     ! *                      Prepare for Particle Tracking                    *
@@ -364,7 +360,7 @@ contains
       inbounds = 0
       !Determine if particle is within model bounadaries
       call mbounds(par(n,pY),par(n,pX),inbounds)
-      if (inbounds.EQ.0) then
+      if (inbounds.EQ.0) then 
         if(ErrorFlag < 1 .OR. ErrorFlag > 3)then
           write(*,*) 'Particle initial location outside main bounds, n=',n
           write(*,*) 'x:   ',par(n,pX),' y:   ',par(n,pY)
@@ -470,7 +466,7 @@ contains
       CLOSE(101)
     ENDIF
 
-
+  
     !Create file to track model timing
     IF(WriteModelTiming)then
       OPEN(300,FILE='Timing.csv',STATUS='REPLACE')
@@ -547,7 +543,7 @@ contains
 
   end subroutine ini_LTRANS
 
-
+  
 
   subroutine run_External_Timestep()
     use param_mod, only: dt,idt,WriteModelTiming
@@ -559,7 +555,7 @@ contains
 
       IF(WriteModelTiming) call CPU_TIME(before)
 
-      !Read in hydrodynamic model data
+      !Read in hydrodynamic model data 
       IF(p > 2) CALL updateHydro()   !do not start updating until 3rd iteration
 
       IF(WriteModelTiming) then
@@ -567,7 +563,7 @@ contains
         timeCounts(1) = timeCounts(1) + (after-before)
       ENDIF
 
-      !Prepare external time step values to be used for
+      !Prepare external time step values to be used for 
       !  calculating Advection and Turbulence
       ex=0.0
       ex(1) = (p-2)*dt
@@ -587,7 +583,7 @@ contains
   subroutine run_Internal_Timestep()
     use param_mod, only: idt,iPrint
 
-    !Prepare internal time step values to be used for
+    !Prepare internal time step values to be used for 
     !  calculating Advection and Turbulence
     ix(1) = ex(2) + DBLE((it-2)*idt)
     ix(2) = ex(2) + DBLE((it-1)*idt)
@@ -615,7 +611,7 @@ contains
       printdt=0  !reset print counter
     endif
 
-  end subroutine run_Internal_Timestep
+  end subroutine run_Internal_Timestep  
 
 
 
@@ -639,7 +635,7 @@ contains
         efile = TRIM(outpath) // 'endfile.csv'
       else
         efile = 'endfile.csv'
-      endif
+      endif 
 
       write(*,*) 'write endfile.csv'
 
@@ -702,11 +698,11 @@ contains
 
   end subroutine fin_LTRANS
 
+  
 
+  
 
-
-
-
+  
 
   subroutine update_particles()
 
@@ -734,7 +730,7 @@ contains
     DOUBLE PRECISION, ALLOCATABLE, DIMENSION( : ) :: Pwc_wzb,Pwc_wzc,Pwc_wzf
     DOUBLE PRECISION :: Xpar,Ypar,Zpar,newXpos,newYpos,newZpos,P_zb,P_zc,P_zf, &
       P_depth,P_angle,P_zeta,P_zetab,P_zetac,P_zetaf,ey(3)
-
+    
     ! Behavior and Turbulence
     DOUBLE PRECISION :: TurbHx,TurbHy,TurbV,Behav,XBehav,YBehav,ZBehav
     LOGICAL :: bott   ! for Behavior 7 along with XBehav,YBehav,ZBehav
@@ -789,7 +785,7 @@ contains
       ! *                                                       *
       ! *********************************************************
 
-      !If the particle is not yet released, set new location to
+      !If the particle is not yet released, set new location to 
       !  current location, and cycle to next particle
       if(ix(3) <= par(n,pDOB))then
         par(n,pnX) = par(n,pX)
@@ -921,12 +917,12 @@ contains
       ey(2) = P_zetac
       ey(3) = P_zetaf
       P_zeta = polintd(ex,ey,3,ix(2))
-
+	  
 	  !update particle
       par(n,pZ) = Zpar
+	  
 
-
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *             Create Matrix of Z-coordinates            *
@@ -949,15 +945,13 @@ contains
 
       enddo
 
-      if (ws .gt. us) then
       !W-coordinate depths at particle location (cont.)
-      Pwc_wzb(ws)= getWlevel(P_zetab,P_depth,ws)
-      Pwc_wzc(ws)= getWlevel(P_zetac,P_depth,ws)
-      Pwc_wzf(ws)= getWlevel(P_zetaf,P_depth,ws)
-      end if
+      Pwc_wzb(i)= getWlevel(P_zetab,P_depth,ws)
+      Pwc_wzc(i)= getWlevel(P_zetac,P_depth,ws)
+      Pwc_wzf(i)= getWlevel(P_zetaf,P_depth,ws)
 
       do i=1,us
-        if ((Zpar .LT. Pwc_zb(i)) .OR. &
+        if ((Zpar .LT. Pwc_zb(i)) .OR. &   
             (Zpar .LT. Pwc_zc(i)) .OR. &
             (Zpar .LT. Pwc_zf(i))      ) exit
       enddo
@@ -1002,9 +996,9 @@ contains
       kn1_w = Wad
 
       !Estimate new coordinates for next RK position
-      x1 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt)/DBLE(2)
-      y1 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt)/DBLE(2)
-      z1 = Zpar +  Wad * DBLE(idt)/DBLE(2)
+      x1 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt)/DBLE(2) 
+      y1 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt)/DBLE(2) 
+      z1 = Zpar +  Wad * DBLE(idt)/DBLE(2) 
       if(z1 .GT. minpartdepth) z1 = minpartdepth - DBLE(0.000001)
       if(z1 .LT. maxpartdepth) z1 = maxpartdepth + DBLE(0.000001)
 
@@ -1018,8 +1012,8 @@ contains
       kn2_w = Wad
 
       !Estimate new coordinates for next RK position
-      x2 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt)/DBLE(2)
-      y2 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt)/DBLE(2)
+      x2 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt)/DBLE(2) 
+      y2 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt)/DBLE(2) 
       z2 = Zpar +  Wad * DBLE(idt)/DBLE(2)
       if(z2 .GT. minpartdepth) z2 = minpartdepth - DBLE(0.000001)
       if(z2 .LT. maxpartdepth) z2 = maxpartdepth + DBLE(0.000001)
@@ -1034,8 +1028,8 @@ contains
       kn3_w = Wad
 
       !Calculate the coordinates at the final position
-      x3 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt)
-      y3 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt)
+      x3 = Xpar + (Uad*cos(P_angle) - Vad*sin(P_angle)) * DBLE(idt) 
+      y3 = Ypar + (Uad*sin(P_angle) + Vad*cos(P_angle)) * DBLE(idt) 
       z3 = Zpar + Wad * DBLE(idt)
       if(z3 .GT. minpartdepth) z3 = minpartdepth - DBLE(0.000001)
       if(z3 .LT. maxpartdepth) z3 = maxpartdepth + DBLE(0.000001)
@@ -1058,7 +1052,7 @@ contains
       AdvectY = idt*(P_U*sin(P_angle) + P_V*cos(P_angle))
       AdvectZ = idt*P_W
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *                Salinity and Temperature               *
@@ -1067,13 +1061,13 @@ contains
 
       IF (SaltTempOn) THEN
 
-        !Calculate salinity and temperature at the particle location
+        !Calculate salinity and temperture at the particle location       
         do i=3,us-2
           if ((Zpar .LT. Pwc_zb(i)) .OR.    &
               (Zpar .LT. Pwc_zc(i)) .OR.    &
               (Zpar .LT. Pwc_zf(i))         ) exit
         enddo
-        deplvl = i-2
+        deplvl = i-2    
         P_Salt(n) = WCTS_ITPI("salt",Xpar,Ypar,deplvl,Pwc_zb,Pwc_zc,Pwc_zf,    &
                               us,P_zb,P_zc,P_zf,ex,ix,p,4)
         P_Temp(n) = WCTS_ITPI("temp",Xpar,Ypar,deplvl,Pwc_zb,Pwc_zc,Pwc_zf,    &
@@ -1081,7 +1075,7 @@ contains
 
       ENDIF
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *                  Horizontal Turbulence                *
@@ -1092,19 +1086,19 @@ contains
 
       IF (HTurbOn) CALL HTurb(TurbHx,TurbHy)
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *                   Vertical Turbulence                 *
       ! *                                                       *
-      ! *********************************************************
+      ! ********************************************************* 
 
       IF (WriteModelTiming) call CPU_TIME(times(5))
 
       IF (VTurbOn) CALL VTurb(P_zc,P_depth,P_zetac,p,ex,ix,Pwc_wzb,Pwc_wzc,    &
                               Pwc_wzf,TurbV)
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *                       Behavior                        *
@@ -1117,7 +1111,7 @@ contains
               P_zb,P_zc,P_zf,P_zetac,par(n,pAge),P_depth,P_U,P_V,P_angle,      &
               n,it,ex,ix,ix(3)/DBLE(86400),p,bott,XBehav,YBehav,ZBehav)
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *     Update Particle Locations and Check Boundaries    *
@@ -1131,7 +1125,7 @@ contains
       newZpos = 0.0
 
       !Update due to Advection and Turbulence
-      newXpos = par(n,pX) + AdvectX + TurbHx
+      newXpos = par(n,pX) + AdvectX + TurbHx 
       newYpos = par(n,pY) + AdvectY + TurbHy
       newZpos = par(n,pZ) + AdvectZ + TurbV
 
@@ -1148,7 +1142,7 @@ contains
         reflect = P_depth - newZpos
         NewZpos = P_depth + reflect
         IF(TrackCollisions) hitBottom(n) = hitBottom(n) + 1
-      endif
+      endif 
 
       !Update due to Behavior
       newZpos = NewZpos + ZBehav
@@ -1170,7 +1164,7 @@ contains
 
       endif
 
-
+  
       !Check vertical boundares and move back in domain
       !  if particle above surface, particle moves just below surface
       if (newZpos.GT.P_zetac) NewZpos = P_zetac - DBLE(0.000001)
@@ -1182,7 +1176,7 @@ contains
       endif
 
       !Horizontal boundary tests. Ensure particle still within domain
-      !If not, reflect particle off main boundary or island walls
+      !If not, reflect particle off main boundary or island walls 
       Xpos = par(n,pX)
       Ypos = par(n,pY)
       nXpos = newXpos
@@ -1312,7 +1306,7 @@ contains
         endif
       endif
 
-      ! End boundary condition tests *******************
+      ! End boundary condition tests ******************* 
 
       !Assign new particle positions
       par(n,pnX) = newXpos
@@ -1369,7 +1363,7 @@ contains
         endif
       ENDIF
 
-
+  
       ! *********************************************************
       ! *                                                       *
       ! *                      Settlement                       *
@@ -1385,9 +1379,9 @@ contains
           par(n,pLifespan) = par(n,pAge)
         endif
 
-      endif
+      endif 
 
-
+  
       ! *****************************************************************
       ! *                      End of Particle Loop                     *
       ! *****************************************************************
@@ -1405,7 +1399,7 @@ contains
 
     ENDDO !end loop for each particle
 
-
+  
     ! *********************************************************
     ! *               Update particle locations               *
     ! *********************************************************
@@ -1427,7 +1421,7 @@ contains
 
   SUBROUTINE find_currents(Xpar,Ypar,Zpar,Pwc_zb,Pwc_zc,Pwc_zf,Pwc_wzb,   &
     Pwc_wzc,Pwc_wzf,P_zb,P_zc,P_zf,ex,ix,p,version,Uad,Vad,Wad)
-    !This Subroutine calculates advection currents at the particle's
+    !This Subroutine calculates advection currents at the particle's 
     !  location in space and time
 
     USE PARAM_MOD,  ONLY: us,ws,z0
@@ -1479,9 +1473,9 @@ contains
     !           *********************************************************
 
 
-    !i. Determine if particle is deep enough that velocities are affected by
+    !i. Determine if particle is deep enough that velocities are affected by 
     !  the bottom.
-    ! If so, apply log layer between deepest current velocity predicitons
+    ! If so, apply log layer between deepest current velocity predictions 
     ! (deepest rho s-level for u,v and deepest w s-level for w) and bottom.
     ! OR, if below z0, set advection velocities to 0.0
     if ((Zpar .LT. Pwc_wzb(1)+z0) .OR. &
@@ -1506,7 +1500,7 @@ contains
       Pwc_Wc = interp(Xpar,Ypar,"wvelc",2)
       Pwc_Wf = interp(Xpar,Ypar,"wvelf",2)
 
-      !  u(z)  = [ u(z1) / (log(z1/zo) ] * (log (z/zo)
+      !  u(z)  = [ u(z1) / (log(z1/zo) ] * (log (z/zo) 
       !where:
       !  u is current velocity
       !  z1 is height of first sigma level above bottom
@@ -1532,7 +1526,7 @@ contains
       !     *        Find Internal b,c,f and Advection Values       *
       !     *********************************************************
       !
-      ! ii. fit polynomial to hydrodynamic model output and find internal
+      ! ii. fit polynomial to hydrodynamic model output and find internal 
       !     b,c,f values
 
       !a. U velocity
@@ -1694,7 +1688,7 @@ contains
       call CPU_TIME(times(1))
     ENDIF
 
-
+  
   end subroutine printOutput
 
   SUBROUTINE writeOutput(x,y,z,P_age,prcount,hitBottom,hitLand,P_Salt,P_Temp)
@@ -1721,7 +1715,7 @@ contains
     INTEGER :: counter2
 
     !Convert particle position (in meters) to latitude and longitude &
-    !Find identification number that describes a particle's behavior
+    !Find identification number that describes a particle's behavior 
     !  type or status for use in visualization routines
     do n=1,numpar
       pLon(n) = x2lon(x(n),y(n))
@@ -1731,7 +1725,7 @@ contains
 
     !if writing to .csv files:
     if(writeCSV)then
-      !Create a filename and unit number for each iteration
+      !Create a filename and unit number for each iteration    
       counter2=prcount+10000000
       prefix2='para'
       suffix2='.csv'
@@ -1743,14 +1737,14 @@ contains
       open(2,FILE=TRIM(filenm2),STATUS='REPLACE')
       5 format(F10.3,',',I7,2(',',F9.4),2(',',F8.4)) !SaltTemp
 
-      !Based on user options, Write specified data to file
+      !Based on user options, Write specified data to file                                      
       do n = 1,numpar
 
         if (SaltTempOn) then
           write(2,5) z(n),int(statuses(n)),pLon(n),pLat(n),P_Salt(n),P_Temp(n)
         else
           write(2,5) z(n),int(statuses(n)),pLon(n),pLat(n)
-        endif
+        endif 
 
       enddo
 

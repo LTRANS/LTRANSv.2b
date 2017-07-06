@@ -267,9 +267,3 @@
 
   namelist/other/seed,BoundaryBLNs,SaltTempOn,TrackCollisions,WriteHeaders, &
                  WriteModelTiming,WriteProblemFile,ijbuff,ErrorFlag,FreeSlip
-
-! hf since namelist variables can't be dynamic, we need to set a maximum number of particles
-  INTEGER, PARAMETER :: MaxNumParticles = 20000 ! increase this if necessary
-  DOUBLE PRECISION, DIMENSION (MaxNumParticles,16) :: parAttrib ! change second dimension if nAttrib (LTRANS.f90) is changed
-
-  namelist/par_attrib/ parAttrib

@@ -48,7 +48,10 @@ MODULE CONVERT_MOD
 !
 ! Created by:           Zachary Schlag
 ! Created on:           23 Jul 2008
-! Last modified on:     03 Dec 2010
+
+! Last modified on:     08 Jul 2015
+! Last modified by:     K.A.S. Mislan
+! Last modification:    Added code to correctly convert grids that span >180 deg
 
 
 USE PARAM_MOD, ONLY: PI,Earth_Radius,SphericalProjection,lonmin,latmin
