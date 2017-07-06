@@ -183,7 +183,7 @@ CONTAINS
                     daytime,p,bott,XBehav,YBehav,ZBehav)
     USE PARAM_MOD, ONLY: us,dt,idt,twistart,twiend,Em,pi,daylength,Kd,thresh,  &
                          Sgradient,swimfast,swimstart,sink,Hswimspeed,         &
-                         Swimdepth
+                         Swimdepth, parAttrib
     USE HYDRO_MOD, ONLY: WCTS_ITPI
     USE RANDOM_MOD, ONLY: genrand_real1
     IMPLICIT NONE
