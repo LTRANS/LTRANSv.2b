@@ -94,35 +94,72 @@ CONTAINS
     REAL, INTENT(IN) :: lon
     REAL, INTENT(IN), OPTIONAL :: lat
     DOUBLE PRECISION :: RCF  ! Radian conversion factor
-    DOUBLE PRECISION :: c,ax,ay,az,bx,by,bz,alon,alat,blon,blat
+    DOUBLE PRECISION :: c,ax,ay,az,bx,by,bz,alon,alat,blon,blat,x180,xtralon
 
     RCF = DBLE(180.0) / PI
 
     if(SphericalProjection)then
       if( present(lat) )then
 
-        alon = lon
-        alat = lat
-        blon = lonmin
-        blat = lat
+        if((lon-lonmin) .gt. 180.0)then
+          alon = 180.0
+          alat = lat
+          blon = 0
+          blat = lat
 
-        alon = alon / RCF
-        alat = alat / RCF
-        blon = blon / RCF
-        blat = blat / RCF
+          alon = alon / RCF
+          alat = alat / RCF
+          blon = blon / RCF
+          blat = blat / RCF
 
-        c  = cos(alat)
-        ax = c * cos(alon)
-        ay = c * sin(alon)
-        az = sin(alat)
+          c  = cos(alat)
+          ax = c * cos(alon)
+          ay = c * sin(alon)
+          az = sin(alat)
 
-        c  = cos(blat)
-        bx = c * cos(blon)
-        by = c * sin(blon)
-        bz = sin(blat)
+          c  = cos(blat)
+          bx = c * cos(blon)
+          by = c * sin(blon)
+          bz = sin(blat)
 
-        rlon2x = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+          x180 = acos(ax*bx + ay*by + az*bz) * Earth_Radius
 
+          alon = lon
+          blon = lonmin+180.0
+
+          alon = alon / RCF
+          blon = blon / RCF
+
+          ax = c * cos(alon)
+          ay = c * sin(alon)
+          bx = c * cos(blon)
+          by = c * sin(blon)
+
+          xtralon = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+          rlon2x = x180 + xtralon
+        else
+          alon = lon
+          alat = lat
+          blon = lonmin
+          blat = lat
+
+          alon = alon / RCF
+          alat = alat / RCF
+          blon = blon / RCF
+          blat = blat / RCF
+
+          c  = cos(alat)
+          ax = c * cos(alon)
+          ay = c * sin(alon)
+          az = sin(alat)
+
+          c  = cos(blat)
+          bx = c * cos(blon)
+          by = c * sin(blon)
+          bz = sin(blat)
+
+          rlon2x = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+        endif
       else
         write(*,*) "Problem lon2x: spherical projection without lat value"
       endif
@@ -138,34 +175,14 @@ CONTAINS
     DOUBLE PRECISION, INTENT(IN) :: lon
     DOUBLE PRECISION, INTENT(IN), OPTIONAL :: lat
     DOUBLE PRECISION :: RCF  ! Radian conversion factor
-    DOUBLE PRECISION :: c,ax,ay,az,bx,by,bz,alon,alat,blon,blat
+    DOUBLE PRECISION :: c,ax,ay,az,bx,by,bz,alon,alat,blon,blat,x180,xtralon
 
     RCF = DBLE(180.0) / PI
 
     if(SphericalProjection)then
       if( present(lat) )then
 
-        alon = lon
-        alat = lat
-        blon = lonmin
-        blat = lat
-
-        alon = alon / RCF
-        alat = alat / RCF
-        blon = blon / RCF
-        blat = blat / RCF
-
-        c  = cos(alat)
-        ax = c * cos(alon)
-        ay = c * sin(alon)
-        az = sin(alat)
-
-        c  = cos(blat)
-        bx = c * cos(blon)
-        by = c * sin(blon)
-        bz = sin(blat)
-
-        dlon2x = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+	dlon2x = (lon-lonmin)/180.0 * Earth_Radius * pi * cos(lat/RCF)
 
       else
         write(*,*) "Problem lon2x: spherical projection without lat value"
@@ -177,20 +194,27 @@ CONTAINS
   END FUNCTION dlon2x
 
 
-  DOUBLE PRECISION FUNCTION rlat2y(lat)
+  DOUBLE PRECISION FUNCTION rlat2y(lat,lon)
     IMPLICIT NONE
     REAL, INTENT(IN) :: lat
+    DOUBLE PRECISION, INTENT(IN), OPTIONAL :: lon
     DOUBLE PRECISION :: RCF  ! Radian conversion factor
     DOUBLE PRECISION :: c,ax,ay,az,bx,by,bz,alon,alat,blon,blat
 
     RCF = DBLE(180.0) / PI
 
     if(SphericalProjection) then
-
-      alon = lonmin
-      alat = lat
-      blon = lonmin
-      blat = latmin
+      if( present(lon) )then
+        alon = lon
+        alat = lat
+        blon = lon
+        blat = latmin
+      else
+	alon = lonmin
+	alat = lat
+        blon = lonmin
+        blat = latmin   
+      endif
 
       alon = alon / RCF
       alat = alat / RCF
@@ -228,27 +252,7 @@ CONTAINS
 
     if(SphericalProjection) then
 
-      alon = lonmin
-      alat = lat
-      blon = lonmin
-      blat = latmin
-
-      alon = alon / RCF
-      alat = alat / RCF
-      blon = blon / RCF
-      blat = blat / RCF
-
-      c = cos(alat)
-      ax = c * cos(alon)
-      ay = c * sin(alon)
-      az = sin(alat)
-
-      c = cos(blat)
-      bx = c * cos(blon)
-      by = c * sin(blon)
-      bz = sin(blat)
-
-      dlat2y = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+      dlat2y = (lat-latmin)*Earth_Radius*pi/180.0
 
     else
 
@@ -264,7 +268,7 @@ CONTAINS
     REAL, INTENT(IN) :: x
     REAL, INTENT(IN), OPTIONAL :: y
     DOUBLE PRECISION :: RCF  ! Radian conversion factor
-    DOUBLE PRECISION :: lat
+    DOUBLE PRECISION :: lat,c,ax,ay,az,bx,by,bz,alon,alat,blon,blat,x180
 
     RCF = DBLE(180.0) / PI
 
@@ -272,8 +276,35 @@ CONTAINS
 
       if( PRESENT(y) )then
         lat = (y * RCF / Earth_Radius + latmin) / RCF
-        rx2lon = lonmin + RCF*acos( (cos(x/Earth_Radius) - sin(lat)*sin(lat)) &
-                                                        / (cos(lat)*cos(lat)) ) 
+
+        alon = 0
+        alat = lat
+        blon = 180.0
+        blat = lat
+
+        alon = alon / RCF
+        blon = blon / RCF
+
+        c  = cos(alat)
+        ax = c * cos(alon)
+        ay = c * sin(alon)
+        az = sin(alat)
+
+        c  = cos(blat)
+        bx = c * cos(blon)
+        by = c * sin(blon)
+        bz = sin(blat)
+
+        x180 = acos(ax*bx + ay*by + az*bz) * Earth_Radius
+
+        if(x .gt. x180)then
+
+          rx2lon = lonmin + 180.0 + RCF*acos( (cos((x180-x)/Earth_Radius) - sin(lat)*sin(lat)) &
+                                                          / (cos(lat)*cos(lat)) )
+        else
+          rx2lon = lonmin + RCF*acos( (cos(x/Earth_Radius) - sin(lat)*sin(lat)) &
+                                                        / (cos(lat)*cos(lat)) )
+        endif
       else
         write(*,*) "Problem x2lon: Spherical projection without y value"
       endif
@@ -290,16 +321,17 @@ CONTAINS
     DOUBLE PRECISION, INTENT(IN) :: x
     DOUBLE PRECISION, INTENT(IN), OPTIONAL :: y
     DOUBLE PRECISION :: RCF  ! Radian conversion factor
-    DOUBLE PRECISION :: lat
+    DOUBLE PRECISION :: lat,c,ax,ay,az,bx,by,bz,alon,alat,blon,blat,x180
 
     RCF = DBLE(180.0) / PI
 
     if(SphericalProjection) then
 
       if( PRESENT(y) )then
-        lat = (y * RCF / Earth_Radius + latmin) / RCF
-        dx2lon = lonmin + RCF*acos( (cos(x/Earth_Radius) - sin(lat)*sin(lat)) &
-                                                        / (cos(lat)*cos(lat)) ) 
+        lat = y*180.0/(Earth_Radius*pi) + latmin
+
+	dx2lon = x*180.0 / (Earth_Radius * pi * cos(lat/RCF)) + lonmin
+
       else
         write(*,*) "Problem x2lon: Spherical projection without y value"
       endif
@@ -335,7 +367,7 @@ CONTAINS
     RCF = DBLE(180.0) / PI
 
     if(SphericalProjection) then
-      dy2lat = y * RCF / Earth_Radius + latmin
+	dy2lat = y * RCF / Earth_Radius + latmin
     else
       dy2lat = 2.0*RCF * ( atan(exp(y/Earth_Radius)) - pi/4.0 )
     endif
