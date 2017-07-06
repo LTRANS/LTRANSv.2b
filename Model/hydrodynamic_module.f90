@@ -3215,7 +3215,7 @@ CONTAINS
                                 "Temperature at the particle's location")
           IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
-          STATUS = NF90_PUT_ATT(NCID, tempID, "units", "° Celcius")
+          STATUS = NF90_PUT_ATT(NCID, tempID, "units", "° Celsius")
           IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
           STATUS = NF90_PUT_ATT(NCID, tempID, "field",                         &
