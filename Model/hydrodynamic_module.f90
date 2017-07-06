@@ -3215,11 +3215,8 @@ CONTAINS
                                 "Temperature at the particle's location")
           IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
-<<<<<<< HEAD
           STATUS = NF90_PUT_ATT(NCID, tempID, "units", "dg Celsius")
-=======
-          STATUS = NF90_PUT_ATT(NCID, tempID, "units", "° Celsius")
->>>>>>> origin/master
+
           IF(STATUS /= NF90_NOERR) WRITE(*,*) NF_STRERROR(STATUS)
 
           STATUS = NF90_PUT_ATT(NCID, tempID, "field",                         &
